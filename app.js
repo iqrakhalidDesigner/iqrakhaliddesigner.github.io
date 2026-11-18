@@ -7,23 +7,26 @@ const projectsPerPage = 9;
 let shownCount = projectsPerPage;
 const dialog = document.querySelector("#case-study");
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+const mobile = matchMedia("(max-width: 820px)");
 const revealObserver = new IntersectionObserver(entries => {
   for (const entry of entries) {
     if (!entry.isIntersecting) continue;
     const target = entry.target;
     revealObserver.unobserve(target);
-    target.classList.remove("reveal-pending");
     if (reducedMotion.matches || target.contains(document.activeElement)) continue;
     const distance = Math.min(window.innerWidth * .03, window.innerWidth <= 980 ? 22 : 48);
     const offset = target.dataset.revealSide === "left" ? -distance : distance;
-    target.animate(
-      [{ opacity: 0, translate: offset + "px 0" }, { opacity: 1, translate: "0 0" }],
-      { duration: 660, delay: Number(target.dataset.revealDelay || 0), easing: "cubic-bezier(.18,.72,.24,1)", fill: "backwards" }
-    );
+    const start = mobile.matches
+      ? { opacity: .85, translate: "0 6px" }
+      : { opacity: .45, translate: offset + "px 0" };
+    target.animate([start, { opacity: 1, translate: "0 0" }], {
+      duration: mobile.matches ? 220 : 480,
+      delay: mobile.matches ? 0 : Number(target.dataset.revealDelay || 0),
+      easing: "ease-out"
+    });
   }
 }, { threshold: .08 });
 function observeReveal(target, index) {
-  target.classList.add("reveal-pending");
   target.dataset.revealSide = index % 2 === 0 ? "left" : "right";
   revealObserver.observe(target);
 }
@@ -164,7 +167,6 @@ viewToggle.addEventListener("click", () => {
 
 const menu = document.querySelector(".menu-toggle");
 const nav = document.querySelector("#site-nav");
-const mobile = matchMedia("(max-width: 700px)");
 const header = menu.closest("header");
 function setMenu(open) {
   menu.hidden = !mobile.matches;
