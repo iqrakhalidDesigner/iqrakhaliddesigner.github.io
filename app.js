@@ -14,20 +14,14 @@ const revealObserver = new IntersectionObserver(entries => {
     const target = entry.target;
     revealObserver.unobserve(target);
     if (reducedMotion.matches || target.contains(document.activeElement)) continue;
-    const distance = Math.min(window.innerWidth * .03, window.innerWidth <= 980 ? 22 : 48);
-    const offset = target.dataset.revealSide === "left" ? -distance : distance;
-    const start = mobile.matches
-      ? { opacity: .85, translate: "0 6px" }
-      : { opacity: .45, translate: offset + "px 0" };
-    target.animate([start, { opacity: 1, translate: "0 0" }], {
-      duration: mobile.matches ? 220 : 480,
-      delay: mobile.matches ? 0 : Number(target.dataset.revealDelay || 0),
-      easing: "ease-out"
-    });
+    const experience = target.matches(".timeline dt, .role-entry");
+    const frames = experience
+      ? [{ clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0 0 0)" }]
+      : [{ opacity: 0, scale: "0" }, { opacity: 1, scale: "1" }];
+    target.animate(frames, { duration: experience ? 420 : 300, easing: "cubic-bezier(.2,.75,.25,1)" });
   }
 }, { threshold: .08 });
-function observeReveal(target, index) {
-  target.dataset.revealSide = index % 2 === 0 ? "left" : "right";
+function observeReveal(target) {
   revealObserver.observe(target);
 }
 let activeFilter = "All";
@@ -66,7 +60,7 @@ function showCase(index) {
   dialog.scrollTop = 0;
   if (!reducedMotion.matches) {
     document.querySelector(".case-copy").animate(
-      [{ opacity: .5, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }],
+      [{ opacity: 0, scale: "0" }, { opacity: 1, scale: "1" }],
       { duration: 240, easing: "ease-out" }
     );
   }
@@ -87,8 +81,7 @@ dialog.addEventListener("keydown", event => {
 
 function createCard(project, index) {
   const card = element("article", "project");
-  card.dataset.revealDelay = (index % 3) * 55;
-  observeReveal(card, index);
+  observeReveal(card);
   const art = element("div", "project-art " + (project.theme || "project-neutral"));
   const fallback = element("div", "project-fallback", project.mark);
   fallback.setAttribute("aria-hidden", "true");
@@ -201,7 +194,7 @@ window.addEventListener("resize", scheduleNavigationUpdate);
 window.addEventListener("pageshow", scheduleNavigationUpdate);
 scheduleNavigationUpdate();
 
-document.querySelectorAll(".section-heading, .notes-grid details, .skills-grid details, .tool-grid li, .timeline > div, .education-card, .footer-content > h2, .contact-form").forEach(observeReveal);
+document.querySelectorAll(".section-heading, .notes-grid details, .skills-grid details, .tool-grid li, .timeline dt, .role-entry, .education-card, .footer-content > h2, .contact-form").forEach(observeReveal);
 
 const phrase = document.querySelector("#creative-phrase");
 const phrases = ["love.", "remember.", "trust.", "enjoy."];

@@ -73,7 +73,7 @@ h2 { font-size: clamp(2.9rem, 5.7vw, 6rem); letter-spacing: -.065em; }
 .masthead nav { column-gap: clamp(.7rem, 2vw, 1.65rem); }
 .note-controls { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
 .notes-grid, .education-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 275px), 1fr)); gap: .85rem; align-items: start; }
-.notes-grid details, .education-card { margin: 0; padding: 1.15rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; animation: enter .3s ease both; }
+.notes-grid details, .education-card { margin: 0; padding: 1.15rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
 .notes-grid summary strong { display: inline-block; color: var(--ink); }
 .notes-grid summary .eyebrow { margin-right: .6rem; }
 .notes-grid p { color: var(--muted); margin: .7rem 0 0; }
@@ -182,7 +182,6 @@ footer .eyebrow, footer h2 em { color: var(--accent); }
 
 dialog { background: var(--paper); color: var(--ink); border: 1px solid var(--line); padding: 0; width: min(680px, 100% - 2rem); max-height: calc(100% - 2rem); }
 dialog::backdrop { background: #080b15d9; }
-dialog[open] { animation: enter .28s ease-out both; }
 dialog form { position: sticky; top: 0; height: 0; z-index: 1; }
 .close { position: absolute; right: .7rem; top: .7rem; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--paper); font-size: 1.6rem; line-height: 1; }
 dialog img { max-height: 46vh; object-fit: contain; background: #e5dbce; }
@@ -197,7 +196,7 @@ dialog img { max-height: 46vh; object-fit: contain; background: #e5dbce; }
 .case-navigation button:hover { color: var(--accent); border-color: var(--accent); }
 .case-navigation span { font-size: .72rem; white-space: nowrap; color: var(--muted); }
 .reading-progress { display: none; }
-@keyframes enter { from { opacity: 0; transform: translateY(11px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes enter { from { opacity: 0; scale: 0; } to { opacity: 1; scale: 1; } }
 @keyframes progress { to { transform: scaleX(1); } }
 
 @supports (animation-timeline: scroll()) {
@@ -238,7 +237,7 @@ dialog img { max-height: 46vh; object-fit: contain; background: #e5dbce; }
   .hero-designation { color: var(--muted); }
   .hero-designation::before { content: none; }
   .hero-copy .eyebrow { order: -1; }
-  .hero-copy > *, .portrait, dialog[open] { animation: none; }
+  .hero-copy > *, .portrait { animation: none; }
   .portrait { width: clamp(145px, 52vw, 245px); max-width: 100%; }
   .filter { min-height: 44px; }
   .section-heading { align-items: flex-start; gap: 1rem; }
