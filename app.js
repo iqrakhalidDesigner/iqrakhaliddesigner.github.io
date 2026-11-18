@@ -1,4 +1,4 @@
-const { projects, cvFile, email } = window.portfolio;
+const { projects, email } = window.portfolio;
 const grid = document.querySelector("#project-grid");
 const filters = document.querySelector("#filters");
 const galleryPagination = document.querySelector(".gallery-pagination");
@@ -181,8 +181,12 @@ menu.addEventListener("click", () => setMenu(menu.getAttribute("aria-expanded") 
 header.addEventListener("click", event => {
   const link = event.target.closest("a");
   if (!link || menu.getAttribute("aria-expanded") !== "true") return;
-  const target = document.getElementById(link.hash.slice(1));
   setMenu(false);
+  if (!link.getAttribute("href").startsWith("#")) {
+    menu.focus();
+    return;
+  }
+  const target = document.getElementById(link.hash.slice(1));
   if (!nav.contains(link)) return;
   target.setAttribute("tabindex", "-1");
   target.focus({ preventScroll: true });
@@ -270,12 +274,6 @@ reducedMotion.addEventListener("change", syncPhraseLoop);
 document.addEventListener("visibilitychange", syncPhraseLoop);
 syncPhraseLoop();
 
-if (cvFile) {
-  const download = document.querySelector("#cv-download");
-  download.href = cvFile;
-  download.hidden = false;
-  document.querySelector("#cv-placeholder").hidden = true;
-}
 if (email) {
   const link = document.querySelector("#email-link");
   link.href = "mailto:" + email;

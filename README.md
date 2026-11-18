@@ -6,7 +6,7 @@ Open `index.html` in a modern browser to preview the site. No installation, buil
 
 - **Projects and case studies** — Edit `portfolio.js`. Each entry sets its title, category, cover image, alt text, Behance link, summary, and case-study details. Add fields such as “Brief”, “My role”, “Process”, and “Outcome” under `details` when you have information to share. Categories appear automatically in the filter.
 - **Images** — Place new files in `assets/` and use relative paths such as `assets/new-project.jpg`. Set `mark` to the project’s initials or date for the fallback cover.
-- **CV** — Put a public copy of your PDF in `assets/` and set `cvFile` to its relative path in `portfolio.js`. The download link replaces the “CV available on request” text.
+- **Resume** — Replace `assets/iqra-khalid-cv.pdf` to update the PDF opened by the Resume navigation and intro links.
 - **Contact** — Set `email` in `portfolio.js` to enable the email link. Edit the LinkedIn and Behance links in the footer of `index.html`.
 - **Bio, skills, and experience** — Edit `index.html`. All roles share one career timeline, with dates from your LinkedIn PDF and multiple roles grouped by employer. Skills and tools come from your LinkedIn PDF, CV, and published work.
 - **Image sources** — Portrait and eight employer logos from your supplied files. Other employer logos come from the official sites of the School Education Department, Game Rezort, DevBatch, and The Game Storm Studios. Project covers come from Behance. Software marks come from [Devicon](https://github.com/devicons/devicon), with its license in `assets/devicon-license.txt`.

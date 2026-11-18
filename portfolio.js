@@ -1,7 +1,5 @@
-// Set cvFile to "assets/iqra-khalid-cv.pdf" after adding your public CV.
 // Set email to your preferred public address, or leave it blank to use social links.
 window.portfolio = {
-  cvFile: "",
   email: "",
   projects: [
     {
