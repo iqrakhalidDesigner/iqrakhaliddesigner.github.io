@@ -230,11 +230,9 @@ scheduleNavigationUpdate();
 document.querySelectorAll(".section-heading, .notes-grid details, .skills-grid details, .tool-grid li, .timeline > div, .education-card, .footer-content > h2, .contact-form").forEach(observeReveal);
 
 const phrase = document.querySelector("#creative-phrase");
-const phraseToggle = document.querySelector(".creative-toggle");
 const phrases = ["love.", "remember.", "trust.", "enjoy."];
 let phraseIndex = 0;
 let phraseTimer;
-let phrasePaused = false;
 let typedLength = phrases[0].length;
 let erasing = true;
 function typePhrase() {
@@ -254,24 +252,17 @@ function typePhrase() {
 }
 function syncPhraseLoop() {
   clearTimeout(phraseTimer);
-  phraseToggle.hidden = reducedMotion.matches;
   if (reducedMotion.matches) {
     phraseIndex = 0;
     typedLength = phrases[0].length;
     phrase.textContent = phrases[0];
     erasing = true;
   }
-  const running = !reducedMotion.matches && !phrasePaused && !document.hidden;
+  const running = !reducedMotion.matches && !document.hidden;
   phrase.classList.toggle("is-typing", running);
   if (!running) return;
   phraseTimer = setTimeout(typePhrase, erasing && typedLength === phrases[phraseIndex].length ? 1750 : 115);
 }
-phraseToggle.addEventListener("click", () => {
-  phrasePaused = !phrasePaused;
-  phraseToggle.textContent = phrasePaused ? "Play" : "Pause";
-  phraseToggle.setAttribute("aria-label", phrasePaused ? "Play rotating text" : "Pause rotating text");
-  syncPhraseLoop();
-});
 reducedMotion.addEventListener("change", syncPhraseLoop);
 document.addEventListener("visibilitychange", syncPhraseLoop);
 syncPhraseLoop();

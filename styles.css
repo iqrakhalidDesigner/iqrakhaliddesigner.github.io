@@ -41,15 +41,16 @@ main, section, footer { scroll-margin-top: 92px; }
 .contact-nav { justify-self: end; border-bottom: 1px solid currentColor; }
 .contact-nav span { margin-left: .4rem; }
 .hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(1.8rem, 5vw, 5rem); align-items: center; min-height: min(690px, calc(100svh - 79px)); padding-block: clamp(2.5rem, 5vw, 5rem); }
+.hero-copy { grid-area: 1 / 1; display: flex; flex-direction: column; align-items: flex-start; }
+.hero > .portrait { grid-area: 1 / 2; }
 .hero-copy > * { animation: enter .65s cubic-bezier(.2,.75,.25,1) both; }
-.hero-copy .role { animation-delay: .16s; }
-.hero-copy .role span { white-space: normal; }
+.hero-copy .role { order: -1; animation-delay: .16s; }
+.hero-copy .eyebrow, .creative-line { order: -2; }
+.hero-designation::before { content: " · "; }
 .creative-line { margin-block: 1rem; animation-delay: .08s; }
 .creative-line h1 { margin: 0 0 .65rem; font-size: clamp(2.65rem, 5.25vw, 5.25rem); line-height: 1; letter-spacing: -.055em; }
 #creative-phrase { display: inline-block; min-height: 1em; padding-right: .11em; border-right: .055em solid transparent; color: var(--accent); font-size: 1.14em; font-weight: 600; white-space: nowrap; }
 #creative-phrase.is-typing { border-right-color: currentColor; }
-.creative-toggle { background: transparent; border: 1px solid var(--line); border-radius: 99px; padding: .2rem .55rem; min-width: 3.65rem; min-height: 30px; color: var(--muted); font-size: .7rem; }
-.creative-toggle:hover { border-color: var(--accent); color: var(--ink); }
 .hero-copy .intro { animation-delay: .23s; }
 .hero-tools { display: inline-flex; gap: .55rem; margin-bottom: 1.2rem; border-radius: 6px; animation-delay: .3s; }
 .hero-tools:hover .tool-icon { transform: translateY(-3px); }
@@ -61,7 +62,6 @@ h1 { font-size: clamp(3.7rem, 8vw, 8.5rem); letter-spacing: -.077em; margin-bloc
 h1 em, h2 em { color: var(--accent); }
 h2 { font-size: clamp(2.9rem, 5.7vw, 6rem); letter-spacing: -.065em; }
 .role { margin: 0; font-size: clamp(1.03rem, 2vw, 1.45rem); font-weight: 650; letter-spacing: -.025em; }
-.role span { white-space: nowrap; }
 .intro { color: var(--muted); max-width: 51ch; margin: .8rem 0 1.6rem; }
 .button { display: inline-flex; justify-content: center; align-items: center; gap: 1.2rem; min-height: 46px; width: fit-content; padding: .65rem 1rem; background: var(--accent); color: var(--paper); text-decoration: none; font-size: .84rem; transition: background .2s; }
 .button:hover { background: #c7d4ff; }
@@ -236,10 +236,16 @@ dialog img { max-height: 46vh; object-fit: contain; background: #e5dbce; }
   .menu-toggle[aria-expanded="true"] span { rotate: 45deg; }
   .hero, .career { grid-template-columns: minmax(0, 1fr); }
   .hero { min-height: 0; gap: 1.6rem; }
+  .hero-copy, .hero > .portrait { grid-area: auto; }
+  .hero-copy .role { order: -3; align-self: center; text-align: center; }
+  .hero-name, .hero-designation { display: block; }
+  .hero-name { font-size: clamp(1.5rem, 5vw, 2.15rem); }
+  .hero-designation { color: var(--muted); }
+  .hero-designation::before { content: none; }
+  .hero-copy .eyebrow { order: -1; }
   .hero-copy > *, .portrait, dialog[open] { animation: none; }
-  .portrait { width: min(72%, 300px); }
+  .portrait { width: clamp(145px, 52vw, 245px); max-width: 100%; }
   .filter { min-height: 44px; }
-  .creative-toggle { min-height: 40px; }
   .section-heading { align-items: flex-start; gap: 1rem; }
   .work-controls { width: 100%; align-items: flex-start; }
   .case-copy h2 { overflow-wrap: anywhere; }
@@ -249,7 +255,7 @@ dialog img { max-height: 46vh; object-fit: contain; background: #e5dbce; }
 @media (max-width: 480px) {
   .creative-line h1 { font-size: clamp(1.85rem, 8.4vw, 2.65rem); }
   .creative-word { display: block; min-height: 1.14em; }
-  .hero-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hero-actions { display: grid; width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero-actions .button { width: 100%; padding-inline: .4rem; gap: .35rem; text-align: center; }
   .wrap { width: calc(100% - 2rem); }
   .project-grid { grid-template-columns: 1fr; }
