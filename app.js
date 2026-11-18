@@ -165,40 +165,8 @@ viewToggle.addEventListener("click", () => {
   renderProjects();
 });
 
-const menu = document.querySelector(".menu-toggle");
 const nav = document.querySelector("#site-nav");
-const header = menu.closest("header");
-function setMenu(open) {
-  menu.hidden = !mobile.matches;
-  menu.setAttribute("aria-expanded", String(open));
-  nav.hidden = mobile.matches && !open;
-}
-setMenu(false);
-mobile.addEventListener("change", () => {
-  const restoreFocus = mobile.matches && nav.contains(document.activeElement);
-  setMenu(false);
-  if (restoreFocus) menu.focus();
-});
-menu.addEventListener("click", () => setMenu(menu.getAttribute("aria-expanded") === "false"));
-header.addEventListener("click", event => {
-  const link = event.target.closest("a");
-  if (!link || menu.getAttribute("aria-expanded") !== "true") return;
-  setMenu(false);
-  if (!link.getAttribute("href").startsWith("#")) {
-    menu.focus();
-    return;
-  }
-  const target = document.getElementById(link.hash.slice(1));
-  if (!nav.contains(link)) return;
-  target.setAttribute("tabindex", "-1");
-  target.focus({ preventScroll: true });
-});
-header.addEventListener("keydown", event => {
-  if (event.key === "Escape" && menu.getAttribute("aria-expanded") === "true") {
-    setMenu(false);
-    menu.focus();
-  }
-});
+const header = nav.closest("header");
 
 const sectionLinks = [...header.querySelectorAll('a[href^="#"]:not(.signature)')];
 const sections = sectionLinks.map(link => document.getElementById(link.hash.slice(1)));
@@ -218,6 +186,12 @@ function updateCurrentSection() {
   currentLink?.removeAttribute("aria-current");
   nextLink?.setAttribute("aria-current", "location");
   currentLink = nextLink;
+  if (mobile.matches && nextLink && nav.contains(nextLink)) {
+    const bar = nav.getBoundingClientRect();
+    const link = nextLink.getBoundingClientRect();
+    const offset = link.left < bar.left ? link.left - bar.left : Math.max(0, link.right - bar.right);
+    if (offset) nav.scrollBy({ left: offset });
+  }
 }
 function scheduleNavigationUpdate() {
   if (!navigationFrame) navigationFrame = requestAnimationFrame(updateCurrentSection);
